@@ -11,8 +11,8 @@ import java.util.Set;
  * To change this template use File | Settings | File Templates.
  */
 public class SurfaceVAO {
-    double surfaceNumber;
-    Set<NodeVAO> nodeVAOs;
+    private double surfaceNumber;
+    private Set<NodeVAO> nodeVAOs;
 
     public SurfaceVAO() {
         surfaceNumber=new Double(-1);

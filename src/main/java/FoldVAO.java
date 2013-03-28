@@ -8,7 +8,7 @@ import java.util.*;
  * To change this template use File | Settings | File Templates.
  */
 public class FoldVAO {
-    Set<NodeVAO> nodeVAOs;
+    private Set<NodeVAO> nodeVAOs;
 
     public Set<NodeVAO> getNodeVAOs() {
         return nodeVAOs;

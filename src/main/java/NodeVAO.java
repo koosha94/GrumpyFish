@@ -6,8 +6,8 @@
  * To change this template use File | Settings | File Templates.
  */
 public class NodeVAO {
-    Double X,Y,Z;
-    SurfaceVAO surfaceVAO;
+    private Double X,Y,Z;
+    private SurfaceVAO surfaceVAO;
     public NodeVAO() {
     }
 
