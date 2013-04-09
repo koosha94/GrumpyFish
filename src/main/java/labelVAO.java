@@ -9,6 +9,27 @@ import java.util.*;
  */
 public class LabelVAO {
     private Set<NodeVAO> nodeVAOs;
+    private Map<String,Double> features;
+
+    public Map<String, Double> getFeatures() {
+        return features;
+    }
+
+    public Double put(String key, Double value) {
+        return features.put(key, value);
+    }
+
+    public Double get(Object key) {
+        return features.get(key);
+    }
+
+    public boolean containsKey(Object key) {
+        return features.containsKey(key);
+    }
+
+    public void setFeatures(Map<String, Double> features) {
+        this.features = features;
+    }
 
     public Set<NodeVAO> getNodeVAOs() {
         return nodeVAOs;
@@ -71,6 +92,7 @@ public class LabelVAO {
     }
 
     public LabelVAO() {
+        features = new HashMap<String, Double>();
         nodeVAOs = new HashSet<NodeVAO>();
     }
 }
