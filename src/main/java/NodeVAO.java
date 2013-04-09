@@ -1,3 +1,8 @@
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
 /**
  * Created with IntelliJ IDEA.
  * User: koosha
@@ -7,11 +12,66 @@
  */
 public class NodeVAO {
     private Double X,Y,Z;
-    private SurfaceVAO surfaceVAO;
-    public NodeVAO() {
+    private Set<SurfaceVAO> surfaceVAOs;
+    private LabelVAO labelVAO;
+    private Map<String,Double> features;
+
+    public Map<String, Double> getFeatures() {
+        return features;
     }
 
+    public void setFeatures(Map<String, Double> features) {
+        this.features = features;
+    }
+
+    public Double put(String key, Double value) {
+        return features.put(key, value);
+    }
+
+    public Double get(Object key) {
+        return features.get(key);
+    }
+
+    public boolean containsKey(Object key) {
+        return features.containsKey(key);
+    }
+
+    public LabelVAO getLabelVAO() {
+        return labelVAO;
+    }
+
+    public void setLabelVAO(LabelVAO labelVAO) {
+        this.labelVAO = labelVAO;
+    }
+
+    public NodeVAO() {
+        features= new HashMap<String, Double>();
+    }
+    public void setFromString(String line){
+        String[] split = line.split(" ");
+        setX(Double.parseDouble(split[0]));
+        setY(Double.parseDouble(split[1]));
+        setZ(Double.parseDouble(split[2]));
+    }
+
+    public Set<SurfaceVAO> getSurfaceVAOs() {
+        if(surfaceVAOs==null)
+            surfaceVAOs = new HashSet<SurfaceVAO>();
+        return surfaceVAOs;
+    }
+
+    public void setSurfaceVAOs(Set<SurfaceVAO> surfaceVAOs) {
+        this.surfaceVAOs = surfaceVAOs;
+    }
+
+    public NodeVAO(String line){
+
+        features= new HashMap<String, Double>();
+        setFromString(line);
+    }
     public NodeVAO(Double x, Double y, Double z) {
+
+        features= new HashMap<String, Double>();
         X = x;
         Y = y;
         Z = z;

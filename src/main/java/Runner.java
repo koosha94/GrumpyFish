@@ -1,3 +1,9 @@
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+
 /**
  * Created by IntelliJ IDEA.
  * User: koosha
@@ -8,6 +14,23 @@
 public class Runner {
 
     public static void main(String args[]){
+        ApplicationContext context = new ClassPathXmlApplicationContext("spring-config.xml");
+        BrainStreamScanner brainBuilder = context.getBean("brainBuilder", BrainStreamScanner.class);
+        BrainVAO brain = context.getBean("brain", BrainVAO.class);
+        brainBuilder.setBrainVAO(brain);
+        try {
+            FileInputStream inputStream = new FileInputStream("folds.vtk.txt");
+            brainBuilder.setInputStream(inputStream);
+            brainBuilder.build();
+            inputStream = new FileInputStream("feature1.vtk.txt");
+            brainBuilder.addNewFeatureFile(inputStream,"mincurv");
+            BrainVAO brainVAO = brainBuilder.getBrainVAO();
+
+            System.out.println("bingool");
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
 
     }
 }

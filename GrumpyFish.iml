@@ -27,6 +27,8 @@
     <orderEntry type="library" name="Maven: org.springframework:spring-aop:3.1.2.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: aopalliance:aopalliance:1.0" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-expression:3.1.2.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.jscience:jscience:4.3.1" level="project" />
+    <orderEntry type="library" name="Maven: org.javolution:javolution:5.2.3" level="project" />
   </component>
 </module>
 

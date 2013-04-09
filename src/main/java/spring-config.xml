@@ -2,5 +2,10 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <bean id="brain" class="BrainVAO" scope="prototype"/>
+    <bean id="fold" class="LabelVAO" scope="prototype"/>
+    <bean id="surface" class="SurfaceVAO" scope="prototype"/>
+    <bean id="node" class="NodeVAO" scope="prototype"/>
+    <bean id="brainBuilder" class="BrainStreamScanner" scope="prototype"/>
 
 </beans>

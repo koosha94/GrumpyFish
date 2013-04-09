@@ -7,7 +7,7 @@ import java.util.*;
  * Time: 3:58 PM
  * To change this template use File | Settings | File Templates.
  */
-public class FoldVAO {
+public class LabelVAO {
     private Set<NodeVAO> nodeVAOs;
 
     public Set<NodeVAO> getNodeVAOs() {
@@ -70,7 +70,7 @@ public class FoldVAO {
         return nodeVAOs.iterator();
     }
 
-    public FoldVAO() {
+    public LabelVAO() {
         nodeVAOs = new HashSet<NodeVAO>();
     }
 }

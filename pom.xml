@@ -7,6 +7,13 @@
     <groupId>GrumpyFish</groupId>
     <artifactId>GrumpyFish</artifactId>
     <version>1.0</version>
+    <build>
+        <resources>
+            <resource>
+                <directory>src/main/java</directory>
+            </resource>
+        </resources>
+    </build>
     <dependencies>
         <dependency>
             <groupId>org.springframework</groupId>
@@ -23,6 +30,12 @@
             <artifactId>spring-core</artifactId>
             <version>3.1.2.RELEASE</version>
         </dependency>
+        <dependency>
+            <groupId>org.jscience</groupId>
+            <artifactId>jscience</artifactId>
+            <version>4.3.1</version>
+        </dependency>
+
     </dependencies>
     
 </project>

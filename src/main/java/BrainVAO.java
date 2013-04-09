@@ -1,4 +1,6 @@
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -10,18 +12,18 @@ import java.util.Set;
  */
 public class BrainVAO {
     private Set<NodeVAO> nodeVAOs;
-    private Set<FoldVAO> foldVAOs;
+    private Map<Integer,LabelVAO> LabelVAOs;
     private Set<SurfaceVAO> surfaceVAOs;
 
     public BrainVAO() {
         this.nodeVAOs=new HashSet<NodeVAO>();
-        this.foldVAOs=new HashSet<FoldVAO>();
+        this.LabelVAOs =new HashMap<Integer,LabelVAO>();
         this.surfaceVAOs=new HashSet<SurfaceVAO>();
     }
 
-    public BrainVAO(Set<NodeVAO> nodeVAOs, Set<FoldVAO> foldVAOs, Set<SurfaceVAO> surfaceVAOs) {
+    public BrainVAO(Set<NodeVAO> nodeVAOs, Map<Integer,LabelVAO> LabelVAOs, Set<SurfaceVAO> surfaceVAOs) {
         this.nodeVAOs = nodeVAOs;
-        this.foldVAOs = foldVAOs;
+        this.LabelVAOs = LabelVAOs;
         this.surfaceVAOs = surfaceVAOs;
     }
 
@@ -33,12 +35,12 @@ public class BrainVAO {
         this.nodeVAOs = nodeVAOs;
     }
 
-    public Set<FoldVAO> getFoldVAOs() {
-        return foldVAOs;
+    public Map<Integer,LabelVAO> getLabelVAOs() {
+        return LabelVAOs;
     }
 
-    public void setFoldVAOs(Set<FoldVAO> foldVAOs) {
-        this.foldVAOs = foldVAOs;
+    public void setLabelVAOs(Map<Integer,LabelVAO> LabelVAOs) {
+        this.LabelVAOs = LabelVAOs;
     }
 
     public Set<SurfaceVAO> getSurfaceVAOs() {
