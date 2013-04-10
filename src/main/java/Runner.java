@@ -19,13 +19,20 @@ public class Runner {
         BrainVAO brain = context.getBean("brain", BrainVAO.class);
         brainBuilder.setBrainVAO(brain);
         try {
-            FileInputStream inputStream = new FileInputStream("folds.vtk.txt");
+            FileInputStream inputStream = new FileInputStream("VTK/brain/NKI-RS-22-1/lh.labels.DKT31.manual.vtk");
             brainBuilder.setInputStream(inputStream);
             brainBuilder.build();
-            inputStream = new FileInputStream("feature1.vtk.txt");
-            brainBuilder.addNewFeatureFile(inputStream,"mincurv");
-            BrainVAO brainVAO = brainBuilder.getBrainVAO();
-            brainBuilder.computeFeatures(brainVAO);
+            inputStream = new FileInputStream("VTK/measures/_hemi_lh_subject_NKI-RS-22-1/lh.pial.area.vtk");
+            brainBuilder.addNewFeatureFile(inputStream,"pial.area");
+            inputStream = new FileInputStream("VTK/measures/_hemi_lh_subject_NKI-RS-22-1/lh.pial.curv.avg.vtk");
+            brainBuilder.addNewFeatureFile(inputStream,"pial.curv");
+            inputStream = new FileInputStream("VTK/measures/_hemi_lh_subject_NKI-RS-22-1/lh.pial.curv.gauss.vtk");
+            brainBuilder.addNewFeatureFile(inputStream,"pial.curv.guass");
+            inputStream = new FileInputStream("VTK/measures/_hemi_lh_subject_NKI-RS-22-1/lh.pial.depth.vtk");
+            brainBuilder.addNewFeatureFile(inputStream,"pial.depth");
+            inputStream = new FileInputStream("VTK/measures/_hemi_lh_subject_NKI-RS-22-1/thickness.vtk");
+            brainBuilder.addNewFeatureFile(inputStream,"thickness");
+            brainBuilder.computeFeatures();
             System.out.println("goool");
         } catch (FileNotFoundException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.

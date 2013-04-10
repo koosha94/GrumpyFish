@@ -124,7 +124,8 @@ public class BrainStreamScanner {
         }
     }
 
-    public void computeFeatures(BrainVAO brainObj) {
+    public void computeFeatures() {
+        BrainVAO brainObj=brainVAO;
         for (LabelVAO labelVAO : brainObj.getLabelVAOs().values()) {
             HashMap<String,ArrayList<Double>> featureMap = new HashMap<String, ArrayList<Double>>();
             for (NodeVAO nodeVAO : labelVAO.getNodeVAOs()) {
