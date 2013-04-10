@@ -173,16 +173,18 @@ public class BrainStreamScanner {
         average_deviation /= n;
         variance /= (n - 1);
         standard_deviation = Math.sqrt(variance);
-        ArrayList<Double> moments = new ArrayList<Double>();
+        ArrayList<Double> moment = new ArrayList<Double>();
         if (variance != 0.0) {
             skew /= (n * variance * standard_deviation);
             kurtosis /= (n * variance * variance) - 3.0;
             for(int iter = 5; iter < 10; iter++){
+                Double deviation1 = 0.0;
+                Double average_deviation1 = 0.0;
                 for (int iter1 = 1; iter1 < n; iter1++) {
-                    Double deviation1 = Math.pow(((Double)nums.get(iter1)).doubleValue() - mean,iter);
-                    Double average_deviation1 = deviation1/n;
-                    moments.add(average_deviation1/Math.pow(variance,iter));
+                    deviation1 = Math.pow(((Double)nums.get(iter1)).doubleValue() - mean,iter);
+                    average_deviation1 = deviation1/n;
                 }
+                moment.add(average_deviation1/Math.pow(variance,iter));
             }
         }
 
@@ -201,8 +203,8 @@ public class BrainStreamScanner {
         features.put(s+"#variance",variance);
         features.put(s+"#skew",skew);
         features.put(s+"#kurtosis",kurtosis);
-        for (int iter = 0; iter < moments.size(); iter++) {
-            features.put(s+"#moment"+(iter+5),moments.get(iter));
+        for (int iter = 0; iter < moment.size(); iter++) {
+            features.put(s+"#moment"+(iter+5),moment.get(iter));
         }
         return features;
     }
