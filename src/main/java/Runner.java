@@ -26,6 +26,7 @@ public class Runner {
             brainBuilder.addNewFeatureFile(inputStream,"mincurv");
             BrainVAO brainVAO = brainBuilder.getBrainVAO();
             brainBuilder.computeFeatures(brainVAO);
+            System.out.println("goool");
         } catch (FileNotFoundException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }

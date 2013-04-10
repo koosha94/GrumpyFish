@@ -138,13 +138,13 @@ public class BrainStreamScanner {
             }
             for (String s : featureMap.keySet()) {
                 ArrayList<Double> values = featureMap.get(s);
-                Map<String, Double> features = moments(values);
-                labelVAO.setFeatures(features);
+                Map<String, Double> features = moments(values,s);
+                labelVAO.getFeatures().putAll(features);
             }
         }
     }
 
-    public Map<String, Double> moments(ArrayList<Double> nums) {
+    public Map<String, Double> moments(ArrayList<Double> nums,String s) {
         Map<String, Double> features = new HashMap<String, Double>();
         double sum = 0.0;
         double mean = 0.0;
@@ -185,13 +185,13 @@ public class BrainStreamScanner {
                 (((Double)nums.get(mid)).doubleValue() +
                         ((Double)nums.get(mid-1)).doubleValue())/2;
 
-        features.put("median",median);
-        features.put("mean",mean);
-        features.put("average deviation",average_deviation);
-        features.put("standard deviation",standard_deviation);
-        features.put("variance",variance);
-        features.put("skew",skew);
-        features.put("kurtosis",kurtosis);
+        features.put(s+"#median",median);
+        features.put(s+"#mean",mean);
+        features.put(s+"#average deviation",average_deviation);
+        features.put(s+"#standard deviation",standard_deviation);
+        features.put(s+"#variance",variance);
+        features.put(s+"#skew",skew);
+        features.put(s+"#kurtosis",kurtosis);
         return features;
     }
 }
