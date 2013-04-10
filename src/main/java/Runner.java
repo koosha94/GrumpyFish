@@ -25,9 +25,7 @@ public class Runner {
             inputStream = new FileInputStream("feature1.vtk.txt");
             brainBuilder.addNewFeatureFile(inputStream,"mincurv");
             BrainVAO brainVAO = brainBuilder.getBrainVAO();
-
-            System.out.println("bingool");
-
+            brainBuilder.computeFeatures(brainVAO);
         } catch (FileNotFoundException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }

@@ -1,4 +1,7 @@
+import com.sun.org.apache.xml.internal.security.algorithms.Algorithm;
+
 import java.io.InputStream;
+import java.text.NumberFormat;
 import java.util.*;
 
 /**
@@ -119,5 +122,76 @@ public class BrainStreamScanner {
             }
             surfaceVAOs.add(surfaceVAO);
         }
+    }
+
+    public void computeFeatures(BrainVAO brainObj) {
+        for (LabelVAO labelVAO : brainObj.getLabelVAOs().values()) {
+            HashMap<String,ArrayList<Double>> featureMap = new HashMap<String, ArrayList<Double>>();
+            for (NodeVAO nodeVAO : labelVAO.getNodeVAOs()) {
+                for (String s : nodeVAO.getFeatures().keySet()) {
+                    Double d = nodeVAO.getFeatures().get(s);
+                    if(!featureMap.containsKey(s)){
+                        featureMap.put(s,new ArrayList<Double>());
+                    }
+                    featureMap.get(s).add(d);
+                }
+            }
+            for (String s : featureMap.keySet()) {
+                ArrayList<Double> values = featureMap.get(s);
+                Map<String, Double> features = moments(values);
+                labelVAO.setFeatures(features);
+            }
+        }
+    }
+
+    public Map<String, Double> moments(ArrayList<Double> nums) {
+        Map<String, Double> features = new HashMap<String, Double>();
+        double sum = 0.0;
+        double mean = 0.0;
+        double average_deviation = 0.0;
+        double standard_deviation = 0.0;
+        double variance = 0.0;
+        double skew = 0.0;
+        double kurtosis = 0.0;
+        double median = 0.0;
+        double deviation = 0.0;
+        int i, n, mid = 0;
+
+        for (int iter = 0; iter < nums.size(); iter++) {
+            sum += nums.get(iter);
+        }
+        n = nums.size();
+        mean = sum/n;
+        for (i=0; i<n; i++) {
+            deviation = ((Double)nums.get(i)).doubleValue() - mean;
+            average_deviation += Math.abs(deviation);
+            variance += Math.pow(deviation,2);
+            skew += Math.pow(deviation,3);
+            kurtosis += Math.pow(deviation,4);
+        }
+        average_deviation /= n;
+        variance /= (n - 1);
+        standard_deviation = Math.sqrt(variance);
+        if (variance != 0.0) {
+            skew /= (n * variance * standard_deviation);
+            kurtosis = kurtosis/(n * variance * variance) - 3.0;
+        }
+
+        Collections.sort(nums);
+
+        mid = (n/2);
+        median = (n % 2 != 0) ?
+                ((Double)nums.get(mid)).doubleValue() :
+                (((Double)nums.get(mid)).doubleValue() +
+                        ((Double)nums.get(mid-1)).doubleValue())/2;
+
+        features.put("median",median);
+        features.put("mean",mean);
+        features.put("average deviation",average_deviation);
+        features.put("standard deviation",standard_deviation);
+        features.put("variance",variance);
+        features.put("skew",skew);
+        features.put("kurtosis",kurtosis);
+        return features;
     }
 }
