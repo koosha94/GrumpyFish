@@ -51,15 +51,21 @@ public class BrainStreamScanner {
         int nodeCounts = Integer.parseInt(split[1]);
         buildNodes(scanner, nodeCounts);
 
-        line = scanner.nextLine();
+        do{
+            line = scanner.nextLine();
+        } while(!line.contains("POLYGONS"));
         split = line.split(" ");
         int srufaceCount = Integer.parseInt(split[1]);
+        System.out.println(srufaceCount+" number surfaces");
         buildSrufaces(scanner,srufaceCount);
-
-        line = scanner.nextLine();
+        System.out.println("finish bulding surfaces");
+        do{
+            line = scanner.nextLine();
+        } while(!line.contains("POINT_DATA"));
         split = line.split(" ");
         int labelCount = Integer.parseInt(split[1]);
-        scanner.nextLine();line = scanner.nextLine();
+        System.out.println(labelCount+" number labels");
+        scanner.nextLine();scanner.nextLine();
         buildLabels(scanner, labelCount);
         brainVAO.setLabelVAOs(labelVAOs);
         brainVAO.setSurfaceVAOs(new HashSet<SurfaceVAO>(surfaceVAOs));
@@ -110,6 +116,8 @@ public class BrainStreamScanner {
     private void buildSrufaces(Scanner scanner, int srufaceCount) {
         surfaceVAOs = new ArrayList<SurfaceVAO>(srufaceCount);
         for (int i = 0; i < srufaceCount; i++) {
+            if(i%1000 == 0)
+                System.out.println(i);
             String line = scanner.nextLine();
             String[] strings = line.split(" ");
 
@@ -182,9 +190,9 @@ public class BrainStreamScanner {
                 Double average_deviation1 = 0.0;
                 for (int iter1 = 1; iter1 < n; iter1++) {
                     deviation1 = Math.pow(((Double)nums.get(iter1)).doubleValue() - mean,iter);
-                    average_deviation1 = deviation1/n;
+                    average_deviation1 += deviation1;
                 }
-                moment.add(average_deviation1/Math.pow(variance,iter));
+                moment.add((average_deviation1/n)/Math.pow(deviation,iter));
             }
         }
 
