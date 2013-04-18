@@ -102,8 +102,8 @@ public class Learner {
             Instances test = randData.testCV(foldsCount, n);
 
 
-            Classifier cModel = (Classifier)new BayesNet();
-            //((Logistic)cModel).setMaxIts(20);
+            Classifier cModel = (Classifier)new Logistic();
+            ((Logistic)cModel).setMaxIts(20);
             cModel.buildClassifier(train);
             Evaluation eTest = new Evaluation(train);
             eTest.evaluateModel(cModel, test);
