@@ -26,11 +26,11 @@ import java.util.*;
  */
 public class Learner {
     public static void main(String args[]) throws Exception {
-        for(int datacount = 10 ; datacount<=22;datacount = datacount+3) {
+        for(int datacount = 22 ; datacount<=22;datacount = datacount+3) {
         List<LabelDump> labelDumps = new ArrayList<LabelDump>();
         try {
             for (int i = 1; i <= datacount; i++) {
-                InputStream file = new FileInputStream( "objfile/lh"+i+".dump" );
+                InputStream file = new FileInputStream( "D:\\mindboggle\\dumpfiles\\"+i+".dump" );
                 InputStream buffer = new BufferedInputStream( file );
                 ObjectInput input = new ObjectInputStream( buffer );
                 labelDumps.add((LabelDump)input.readObject());
@@ -103,8 +103,11 @@ public class Learner {
 
 
             Classifier cModel = (Classifier)new Logistic();
-            ((Logistic)cModel).setMaxIts(20);
+            ((Logistic)cModel).setMaxIts(50);
+
+            System.out.println("building the model");
             cModel.buildClassifier(train);
+            System.out.println("it's built");
             Evaluation eTest = new Evaluation(train);
             eTest.evaluateModel(cModel, test);
             error  = error + eTest.errorRate();

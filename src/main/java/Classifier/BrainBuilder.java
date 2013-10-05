@@ -1,4 +1,4 @@
-
+package Classifier;
 
 import java.io.InputStream;
 import java.util.*;
@@ -10,12 +10,12 @@ import java.util.*;
  * Time: 3:54 PM
  * To change this template use File | Settings | File Templates.
  */
-public class BrainStreamScanner {
+
+public class BrainBuilder {
     private BrainVAO brainVAO;
     private InputStream inputStream;
     Map<Integer,LabelVAO> labelVAOs;
     ArrayList<NodeVAO> nodeVAOs;
-    ArrayList<SurfaceVAO> surfaceVAOs;
     public BrainVAO getBrainVAO() {
         return brainVAO;
     }
@@ -49,25 +49,17 @@ public class BrainStreamScanner {
         String[] split = line.split(" ");
         int nodeCounts = Integer.parseInt(split[1]);
         buildNodes(scanner, nodeCounts);
-
-        do{
-            line = scanner.nextLine();
-        } while(!line.contains("POLYGONS"));
-        split = line.split(" ");
-        int srufaceCount = Integer.parseInt(split[1]);
-        System.out.println(srufaceCount+" number surfaces");
-        buildSrufaces(scanner,srufaceCount);
-        System.out.println("finish bulding surfaces");
+        System.out.println("Ignoring surfaces");
         do{
             line = scanner.nextLine();
         } while(!line.contains("POINT_DATA"));
+        System.out.println("after surfaces");
         split = line.split(" ");
         int labelCount = Integer.parseInt(split[1]);
         System.out.println(labelCount+" number labels");
         scanner.nextLine();scanner.nextLine();
         buildLabels(scanner, labelCount);
         brainVAO.setLabelVAOs(labelVAOs);
-        brainVAO.setSurfaceVAOs(new HashSet<SurfaceVAO>(surfaceVAOs));
         brainVAO.setNodeVAOs(new HashSet<NodeVAO>(nodeVAOs));
     }
     public void addNewFeatureFile(InputStream inputStream,String featurename){
@@ -90,12 +82,11 @@ public class BrainStreamScanner {
             }
 
             brainVAO.setLabelVAOs(labelVAOs);
-            brainVAO.setSurfaceVAOs(new HashSet<SurfaceVAO>(surfaceVAOs));
             brainVAO.setNodeVAOs(new HashSet<NodeVAO>(nodeVAOs));
         }
-         catch (Exception e){
-             e.printStackTrace();
-         }
+        catch (Exception e){
+            e.printStackTrace();
+        }
     }
     private void buildLabels(Scanner scanner, int labelCount) {
         labelVAOs = new HashMap<Integer, LabelVAO>(labelCount);
@@ -105,31 +96,11 @@ public class BrainStreamScanner {
             if(!labelVAOs.containsKey(label)){
                 labelVAOs.put(label,new LabelVAO());
             }
-            nodeVAOs.get(i).setLabelVAO(labelVAOs.get(label));
             labelVAOs.get(label).add(nodeVAOs.get(i));
 
         }
     }
 
-
-    private void buildSrufaces(Scanner scanner, int srufaceCount) {
-        surfaceVAOs = new ArrayList<SurfaceVAO>(srufaceCount);
-        for (int i = 0; i < srufaceCount; i++) {
-            if(i%1000 == 0)
-                System.out.println(i);
-            String line = scanner.nextLine();
-            String[] strings = line.split(" ");
-
-            SurfaceVAO surfaceVAO = new SurfaceVAO();
-            for (int j = 1; j <= Integer.parseInt(strings[0]); j++) {
-                String string = strings[j];
-                int node = Integer.parseInt(string);
-                surfaceVAO.add(nodeVAOs.get(node));
-                nodeVAOs.get(node).getSurfaceVAOs().add(surfaceVAO);
-            }
-            surfaceVAOs.add(surfaceVAO);
-        }
-    }
 
     public void computeFeatures() {
         BrainVAO brainObj=brainVAO;

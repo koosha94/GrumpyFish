@@ -7,5 +7,4 @@
     <bean id="surface" class="SurfaceVAO" scope="prototype"/>
     <bean id="node" class="NodeVAO" scope="prototype"/>
     <bean id="brainBuilder" class="BrainStreamScanner" scope="prototype"/>
-
 </beans>

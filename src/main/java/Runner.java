@@ -18,21 +18,33 @@ public class Runner {
         BrainStreamScanner brainBuilder = context.getBean("brainBuilder", BrainStreamScanner.class);
         BrainVAO brain = context.getBean("brain", BrainVAO.class);
         brainBuilder.setBrainVAO(brain);
-        Integer c = 9;
+        Integer c = 22;
+        String surfaceDirectory = new String("D:\\mindboggle\\Mindboggle101_surfaces\\NKI-RS-22_surfaces\\NKI-RS-22-");
+        String measuresDirectory = new String("D:\\mindboggle\\Mindboggle101_surfaces\\Final Mindboggle Measures\\_hemi_lh_subject_NKI-RS-22-");
+        String dumpFilesDirectory = new String("D:\\mindboggle\\dumpfiles\\");
+
         try {
-            FileInputStream inputStream = new FileInputStream("VTK/brain/NKI-RS-22-"+c+"/lh.labels.DKT31.manual.vtk");
+            FileInputStream inputStream = new FileInputStream(surfaceDirectory+c+"\\lh.labels.DKT31.manual.vtk");
             brainBuilder.setInputStream(inputStream);
             brainBuilder.build();
-            inputStream = new FileInputStream("VTK/measures/_hemi_lh_subject_NKI-RS-22-"+c+"/lh.pial.area.vtk");
-            brainBuilder.addNewFeatureFile(inputStream,"pial.area");
-            inputStream = new FileInputStream("VTK/measures/_hemi_lh_subject_NKI-RS-22-"+c+"/lh.pial.curv.avg.vtk");
-            brainBuilder.addNewFeatureFile(inputStream,"pial.curv");
-            inputStream = new FileInputStream("VTK/measures/_hemi_lh_subject_NKI-RS-22-"+c+"/lh.pial.curv.gauss.vtk");
-            brainBuilder.addNewFeatureFile(inputStream,"pial.curv.guass");
-            inputStream = new FileInputStream("VTK/measures/_hemi_lh_subject_NKI-RS-22-"+c+"/lh.pial.depth.vtk");
-            brainBuilder.addNewFeatureFile(inputStream,"pial.depth");
-            inputStream = new FileInputStream("VTK/measures/_hemi_lh_subject_NKI-RS-22-"+c+"/thickness.vtk");
-            brainBuilder.addNewFeatureFile(inputStream,"thickness");
+            String gradstr = new String("");
+            for(int grad = 0 ; grad <3 ; grad++) {
+                inputStream = new FileInputStream(measuresDirectory+c+"\\"+gradstr+"lh.pial.area.vtk");
+                brainBuilder.addNewFeatureFile(inputStream,gradstr+"pial.area");
+                inputStream = new FileInputStream(measuresDirectory+c+"\\"+gradstr+"lh.pial.curv.avg.vtk");
+                brainBuilder.addNewFeatureFile(inputStream,gradstr+"pial.curv.avg");
+                inputStream = new FileInputStream(measuresDirectory+c+"\\"+gradstr+"lh.pial.curv.gauss.vtk");
+                brainBuilder.addNewFeatureFile(inputStream,gradstr+"pial.curv.guass");
+                inputStream = new FileInputStream(measuresDirectory+c+"\\"+gradstr+"lh.pial.depth.vtk");
+                brainBuilder.addNewFeatureFile(inputStream,gradstr+"pial.depth");
+                inputStream = new FileInputStream(measuresDirectory+c+"\\"+gradstr+"lh.pial.curv.max.vtk");
+                brainBuilder.addNewFeatureFile(inputStream,gradstr+"pial.curv.max");
+                inputStream = new FileInputStream(measuresDirectory+c+"\\"+gradstr+"lh.pial.curv.min.vtk");
+                brainBuilder.addNewFeatureFile(inputStream,gradstr+"pial.curv.min");
+                inputStream = new FileInputStream(measuresDirectory+c+"\\"+gradstr+"sulc.vtk");
+                brainBuilder.addNewFeatureFile(inputStream,gradstr+"sulc");
+                gradstr = gradstr + "gradient_";
+            }
             brainBuilder.computeFeatures();
             BrainVAO brainVAO = brainBuilder.getBrainVAO();
             Map<Integer,LabelVAO> labelVAOs = brainVAO.getLabelVAOs();
@@ -41,12 +53,12 @@ public class Runner {
                 LabelVAO labelVAO = labelVAOs.get(integer);
                 labelDump.data.put(integer,labelVAO.getFeatures());
             }
-            OutputStream file = new FileOutputStream( "objfile/lh"+c+".dump" );
+            OutputStream file = new FileOutputStream( dumpFilesDirectory+c+".dump" );
             OutputStream buffer = new BufferedOutputStream( file );
             ObjectOutput output = new ObjectOutputStream( buffer );
             output.writeObject(labelDump);
             output.close();
-            System.out.println("goool");
+            System.out.println("Finished :)");
         } catch (Exception e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
